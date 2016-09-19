@@ -6,6 +6,7 @@ const Util = require('util');
 const Stream = require('stream');
 const Fs = require('fs');
 const Zlib = require('zlib');
+const Express = require('express');
 const Lab = require('lab');
 const Shot = require('../lib');
 const Code = require('code');
@@ -588,6 +589,24 @@ describe('inject()', () => {
             done();
         });
     });
+
+    it('works with express', (done) => {
+
+        const app = Express();
+
+        app.get('/', (req, res) => {
+
+            res.end('hello');
+
+        });
+
+        Shot.inject(app, { url: '/' }, (res) => {
+
+            expect(res.payload).to.equal('hello');
+            done();
+
+        });
+    });
 });
 
 describe('writeHead()', () => {
@@ -830,6 +849,7 @@ describe('_read()', () => {
             done();
         }
     });
+
 });
 
 
