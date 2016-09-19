@@ -1,14 +1,17 @@
 {
-  "name": "@hapi/shot",
-  "description": "Injects a fake HTTP request/response into a node HTTP server",
+  "name": "pickleback",
+  "description": "@hapi/shot, except patched to work with express",
   "version": "4.1.0",
-  "repository": "git://github.com/hapijs/shot",
+  "repository": "git://github.com/jfhbrook/pickleback.git",
   "main": "lib/index.js",
   "keywords": [
     "utilities",
     "http",
     "debug",
-    "test"
+    "test",
+    "shot",
+    "express",
+    "patch"
   ],
   "dependencies": {
     "@hapi/hoek": "6.x.x",
