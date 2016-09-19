@@ -3,7 +3,7 @@
 const Stream = require('stream');
 const Fs = require('fs');
 const Zlib = require('zlib');
-
+const Express = require('express');
 const Lab = require('@hapi/lab');
 const Shot = require('..');
 const Code = require('@hapi/code');
@@ -483,6 +483,24 @@ describe('inject()', () => {
         const res = await Shot.inject(dispatch, { method: 'post', url: '/', payload: internals.getTestStream(), headers });
         expect(res.payload).to.equal('100');
     });
+
+    it('works with express', (done) => {
+
+        const app = Express();
+
+        app.get('/', (req, res) => {
+
+            res.end('hello');
+
+        });
+
+        Shot.inject(app, { url: '/' }, (res) => {
+
+            expect(res.payload).to.equal('hello');
+            done();
+
+        });
+    });
 });
 
 describe('writeHead()', () => {
@@ -670,6 +688,7 @@ describe('_read()', () => {
         const err = await expect(Shot.inject((req, res) => { }, { url: '/', simulate: { end: 'wrong input' } })).to.reject();
         expect(err.isJoi).to.be.true();
     });
+
 });
 
 

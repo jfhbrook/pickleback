@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "@hapi/code": "5.x.x",
-    "@hapi/lab": "18.x.x"
+    "@hapi/lab": "18.x.x",
+    "express": "4.14.0"
   },
   "scripts": {
     "test": "lab -a @hapi/code -t 100 -L",
