@@ -1,14 +1,17 @@
 {
-  "name": "shot",
-  "description": "Injects a fake HTTP request/response into a node HTTP server",
+  "name": "pickleback",
+  "description": "shot, except patched to work with express",
   "version": "3.3.2",
-  "repository": "git://github.com/hapijs/shot",
+  "repository": "git://github.com/jfhbrook/pickleback.git",
   "main": "lib/index.js",
   "keywords": [
     "utilities",
     "http",
     "debug",
-    "test"
+    "test",
+    "shot",
+    "express",
+    "patch"
   ],
   "engines": {
     "node": ">=4.5.0"

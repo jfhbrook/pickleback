@@ -1,49 +1,27 @@
-![shot Logo](https://raw.github.com/hapijs/shot/master/images/shot.png)
+# ~~shot~~ pickleback
 
-Injects a fake HTTP request/response into a node HTTP server for simulating server logic, writing tests, or debugging. Does not use a socket
-connection so can be run against an inactive server (server not in listen mode).
-
-[![Build Status](https://secure.travis-ci.org/hapijs/shot.png)](http://travis-ci.org/hapijs/shot)
-
-Lead Maintainer: [Matt Harrison](https://github.com/mtharrison)
+This is a patched version of [shot](https://github.com/hapijs/shot) that implements [an admittedly pretty gross fix](https://github.com/jfhbrook/pickleback/blob/patches/lib/index.js#L55-L57) so that it works with [express](https://expressjs.com)  because [the shot team won't](https://github.com/hapijs/shot/issues/82).
 
 ## Example
 
-```javascript
-// Load modules
+Unlike the case with shot, this works:
 
-const Http = require('http');
-const Shot = require('shot');
+```js
+const express = require('express');
+const pickleback = require('pickleback');
 
+const app = express();
 
-// Declare internals
+app.get('/', (req, res) => {
+  res.end('hello world!');
+});
 
-const internals = {};
+pickleback.inject(app, { url: '/' }, (res) => {
+  assert.equal(res.payload, 'hello world!');
+});
 
-
-internals.main = function () {
-
-    const dispatch = function (req, res) {
-
-        const reply = 'Hello World';
-        res.writeHead(200, { 'Content-Type': 'text/plain', 'Content-Length': reply.length });
-        res.end(reply);
-    };
-
-    const server = Http.createServer(dispatch);
-
-    Shot.inject(dispatch, { method: 'get', url: '/' }, (res) => {
-
-        console.log(res.payload);
-    });
-};
-
-
-internals.main();
 ```
-
-Note how `server.listen` is never called.
 
 ## API
 
-See the [API Reference](API.md)
+APIs are almost identical to shot's, so [shot's docs](https://github.com/hapijs/shot/blob/master/API.md) should be correct.
