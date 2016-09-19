@@ -1,8 +1,8 @@
 {
-  "name": "@hapi/shot",
-  "description": "Injects a fake HTTP request/response into a node HTTP server",
+  "name": "pickleback",
+  "description": "@hapi/shot, except patched to work with express",
   "version": "5.0.5",
-  "repository": "git://github.com/hapijs/shot",
+  "repository": "git://github.com/jfhbrook/pickleback.git",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -11,7 +11,10 @@
     "utilities",
     "http",
     "debug",
-    "test"
+    "test",
+    "shot",
+    "express",
+    "patch"
   ],
   "eslintConfig": {
     "extends": [
@@ -25,7 +28,8 @@
   "devDependencies": {
     "@hapi/code": "8.x.x",
     "@hapi/eslint-plugin": "*",
-    "@hapi/lab": "24.x.x"
+    "@hapi/lab": "24.x.x",
+    "express": "^4.14.0"
   },
   "scripts": {
     "test": "lab -a @hapi/code -t 100 -L",

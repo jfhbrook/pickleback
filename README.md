@@ -1,17 +1,32 @@
-<a href="https://hapi.dev"><img src="https://raw.githubusercontent.com/hapijs/assets/master/images/family.png" width="180px" align="right" /></a>
+# ~~shot~~ pickleback
 
-# @hapi/shot
+This is a patched version of [shot](https://github.com/hapijs/shot) that implements [an admittedly pretty gross fix](https://github.com/jfhbrook/pickleback/blob/patches/lib/index.js#L41-L48) so that it works with [express](https://expressjs.com)  because [the shot team won't](https://github.com/hapijs/shot/issues/82).
 
-#### Injects a fake HTTP request/response into your node server logic.
+Unlike the case with shot, this works:
 
-**shot** is part of the **hapi** ecosystem and was designed to work seamlessly with the [hapi web framework](https://hapi.dev) and its other components (but works great on its own or with other frameworks). If you are using a different web framework and find this module useful, check out [hapi](https://hapi.dev) – they work even better together.
+```js
+const assert = require('assert');
 
-### Visit the [hapi.dev](https://hapi.dev) Developer Portal for tutorials, documentation, and support
+const express = require('express');
+const pickleback = require('pickleback');
 
-## Useful resources
+const app = express();
 
-- [Documentation and API](https://hapi.dev/family/shot/)
-- [Versions status](https://hapi.dev/resources/status/#shot) (builds, dependencies, node versions, licenses, eol)
-- [Changelog](https://hapi.dev/family/shot/changelog/)
-- [Project policies](https://hapi.dev/policies/)
-- [Free and commercial support options](https://hapi.dev/support/)
+app.get('/', (req, res) => {
+
+    res.end('hello world!');
+});
+
+const main = async () => {
+
+    const res = await pickleback.inject(app, { url: '/' });
+    assert.equal(res.payload, 'hello world!');
+}
+
+main();
+
+```
+
+## API
+
+APIs are almost identical to shot's, so [shot's docs](https://hapi.dev/family/shot) should be correct.
