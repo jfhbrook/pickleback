@@ -484,22 +484,18 @@ describe('inject()', () => {
         expect(res.payload).to.equal('100');
     });
 
-    it('works with express', (done) => {
+    it('works with express', async (done) => {
 
         const app = Express();
 
         app.get('/', (req, res) => {
 
             res.end('hello');
-
         });
 
-        Shot.inject(app, { url: '/' }, (res) => {
+        const res = await Shot.inject(app, { url: '/' });
 
-            expect(res.payload).to.equal('hello');
-            done();
-
-        });
+        expect(res.payload).to.equal('hello');
     });
 });
 
