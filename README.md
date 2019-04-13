@@ -16,12 +16,18 @@ const pickleback = require('pickleback');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.end('hello world!');
+
+    res.end('hello world!');
 });
 
-pickleback.inject(app, { url: '/' }, (res) => {
-  assert.equal(res.payload, 'hello world!');
-});
+const main = async () => {
+
+    const res = await pickleback.inject(app, { url: '/' });
+    assert.equal(res.payload, 'hello world!');
+}
+
+main();
+
 ```
 
 ## API
